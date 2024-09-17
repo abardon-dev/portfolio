@@ -1,0 +1,25 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "rules": {
+    "no-undef": "off",
+    "prefer-const": "error",
+    "no-duplicate-imports": "error",
+    "array-callback-return": "error",
+    "prefer-template": "warn",
+    "no-eval": "error",
+    "prefer-rest-params": "error",
+    "no-param-reassign": "error",
+    "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+    "arrow-body-style": ["error", "as-needed"],
+    "dot-notation": "warn",
+    "eqeqeq": "error",
+    "no-nested-ternary": "error",
+    "no-unneeded-ternary": "error",
+    "no-else-return": "error",
+    "curly": "error",
+    "no-fallthrough": ["error", { "allowEmptyCase": true }],
+    "@typescript-eslint/no-var-requires": "off"
+  },
+  "reportUnusedDisableDirectives": true
+}
