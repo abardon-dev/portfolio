@@ -11,14 +11,9 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import { navItems } from "../constants/nav-items";
 
 const labels = ["Click me", "Press me", "Tap me", "Select me", "Choose me"];
-
-const navItems: { href: string; text: string }[] = [
-  { href: "/", text: "Home" },
-  { href: "/about", text: "About" },
-  { href: "/blog", text: "Blog" }
-];
 
 const isItemActive = (href: string, segment: string) => segment === href.replace("/", "");
 

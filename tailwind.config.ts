@@ -5,13 +5,17 @@ import { breakpoints } from "./utils/constants/breakpoints";
 const config: Config = {
   content: ["./components/**/*.{ts,tsx,mdx}", "./app/**/*.{ts,tsx,mdx}", "./business/**/*.{ts,tsx,mdx}"],
   theme: {
+    container: {
+      center: true
+    },
     screens: {
       ...breakpoints
     },
     extend: {
       fontFamily: {
         mono: ["var(--font-bueno-mono)", "Courrier New", "monospace"],
-        sans: ["var(--font-inter)", "Arial", "Helvetica", "sans-serif"]
+        sans: ["var(--font-inter)", "Arial", "Helvetica", "sans-serif"],
+        twemoji: ["var(--font-twemoji)"]
       },
       colors: {
         background: "hsl(var(--background))",
@@ -28,6 +32,9 @@ const config: Config = {
         third: {
           DEFAULT: "hsl(var(--third))",
           foreground: "hsl(var(--third-foreground))"
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))"
         }
       },
       borderRadius: {

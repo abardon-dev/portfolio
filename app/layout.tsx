@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/business/components/navigation/header";
+import { Header } from "@/business/navigation/components/header";
+import { Footer } from "@/business/navigation/components/footer";
 
 const buenoMono = localFont({
   src: "./fonts/Bueno.woff",
@@ -14,6 +15,12 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter"
+});
+
+const twemoji = localFont({
+  src: "./fonts/Twemoji.Mozilla.ttf",
+  display: "swap",
+  variable: "--font-twemoji"
 });
 
 export const metadata: Metadata = {
@@ -28,9 +35,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`relative ${buenoMono.variable} ${inter.variable} min-h-svh w-screen overflow-y-auto`}>
+      <body
+        className={`relative ${buenoMono.variable} ${inter.variable} ${twemoji.variable} min-h-svh w-screen overflow-y-auto`}
+      >
         <Header />
-        <main className="2xl:container">{children}</main>
+        <main className="2xl:container sm:pt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );
