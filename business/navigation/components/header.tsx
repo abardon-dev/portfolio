@@ -37,6 +37,8 @@ export function Header() {
               {navItems.map((item) => (
                 <li
                   key={item.href}
+                  onFocus={() => setHoveredItem(item.href)}
+                  onBlur={() => setHoveredItem(null)}
                   onMouseEnter={() => setHoveredItem(item.href)}
                   onMouseLeave={() => setHoveredItem(null)}
                 >
