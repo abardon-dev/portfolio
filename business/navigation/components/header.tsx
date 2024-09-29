@@ -10,7 +10,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
-import Image from "next/image";
 import { navItems } from "../constants/nav-items";
 
 const labels = ["Click me", "Press me", "Tap me", "Select me", "Choose me"];
@@ -27,10 +26,8 @@ export function Header() {
   const isScrollStarted = scrollPosition > 20;
 
   return (
-    <header className="fixed bottom-10 h-fit w-full sm:top-10">
+    <header className="fixed bottom-10 z-50 h-fit w-full sm:top-10">
       <div className="mx-auto flex items-end justify-center gap-6 px-4 sm:gap-10">
-        <Logo />
-
         <div className="flex justify-center gap-6 max-sm:flex-wrap-reverse sm:gap-10">
           <nav className="z-10">
             <ul className="flex space-x-4 sm:space-x-8">
@@ -71,15 +68,7 @@ export function Header() {
             )}
           </AnimatePresence>
         </div>
-
-        <Logo />
       </div>
     </header>
   );
 }
-
-const Logo = () => (
-  <div className="relative size-8 sm:size-10">
-    <Image priority src="/img/react-logo.svg" alt="React logo" fill style={{ objectFit: "contain" }} />
-  </div>
-);

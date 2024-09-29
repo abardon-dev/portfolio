@@ -35,6 +35,9 @@ const config: Config = {
         },
         muted: {
           DEFAULT: "hsl(var(--muted))"
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))"
         }
       },
       borderRadius: {
@@ -43,7 +46,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)"
       },
       boxShadow: {
-        "hover-button": "-0.1em 0.1em 0 0 var(--hover), -0.2em 0.2em 0 0 var(--hover)"
+        "hover-button": "-0.1em 0.1em 0 0 hsl(var(--accent)), -0.2em 0.2em 0 0 hsl(var(--accent))"
       }
     }
   },

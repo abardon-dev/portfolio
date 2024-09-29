@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { navItems } from "../constants/nav-items";
-import { GithubIcon, Linkedin02Icon, Mail01Icon } from "hugeicons-react";
 import { RealtimeClock } from "@/business/location/components/realtime-clock";
 import { getCountryUnicode } from "@/business/location/utils/get-country-unicode";
+import Image from "next/image";
 
 export const Footer = async () => {
   //TODO: Remove this comment when production is ready
@@ -12,35 +12,27 @@ export const Footer = async () => {
   const userCountry = null;
 
   return (
-    <footer className="px-20 py-10 2xl:container max-sm:mb-20">
+    <footer className="px-12 py-5 2xl:container max-sm:mb-20 sm:px-20 sm:py-10">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-3">
           <div>
             <h1 className="text-4xl font-semibold">Curious?</h1>
-            <p className="text-sm text-muted">
+            <p className="relative text-sm text-muted">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, vel libero voluptate similique expedita id
               laborum beatae ab iusto dolores veritatis rerum ipsa voluptatibus voluptatum, quibusdam optio et magni
               maiores.
             </p>
           </div>
-          <div className="flex gap-3 text-background">
-            <Button className="text-inherit" size={"icon"} asChild>
-              <Link href="https://github.com/abardon-dev" target="_blank">
-                <GithubIcon className="size-5 text-inherit" />
-              </Link>
-            </Button>
-
-            <Button className="text-inherit" size={"icon"} asChild>
-              <Link href="https://www.linkedin.com/in/arthur-bardon" target="_blank">
-                <Linkedin02Icon className="size-5 text-inherit" />
-              </Link>
-            </Button>
-
-            <Button className="text-inherit" size={"icon"} asChild>
-              <Link href="mailto:arthur.bardon.dev@gmail.com">
-                <Mail01Icon className="size-5 text-inherit" />
-              </Link>
-            </Button>
+          <div className="relative">
+            <p className="text-lg font-light text-muted">Check my social medias</p>
+            <Image
+              className="absolute -left-11 -top-7 size-12 sm:-left-14 sm:-top-10 sm:size-16"
+              priority
+              src="/img/arrow-thin.svg"
+              alt="Arrow pointing to social medias on the left side"
+              width={64}
+              height={64}
+            />
           </div>
         </div>
 
