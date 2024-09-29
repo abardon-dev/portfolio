@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/business/navigation/components/header";
 import { Footer } from "@/business/navigation/components/footer";
+import { SocialMedias } from "@/business/socials/social-medias";
 
 const buenoMono = localFont({
   src: "./fonts/Bueno.woff",
@@ -36,10 +37,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`relative ${buenoMono.variable} ${inter.variable} ${twemoji.variable} min-h-svh w-screen overflow-y-auto`}
+        className={`relative ${buenoMono.variable} ${inter.variable} ${twemoji.variable} min-h-svh w-screen overflow-y-auto overflow-x-hidden`}
       >
         <Header />
-        <main className="2xl:container sm:pt-20">{children}</main>
+
+        <div className="fixed left-0 top-1/2 z-50 flex -translate-y-1/2 sm:left-5">
+          <SocialMedias />
+        </div>
+
+        <main className="px-12 2xl:container sm:px-20">{children}</main>
         <Footer />
       </body>
     </html>
