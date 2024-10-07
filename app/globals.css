@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root {
-  --background: 266, 44%, 94%;
+  --background: 266 44% 94%;
   --foreground: var(--primary);
 
-  --primary: 227, 45%, 43%;
+  --primary: 227 45% 43%;
   --primary-foreground: var(--background);
-  --secondary: 224, 70%, 67%;
+  --secondary: 224 70% 67%;
   --secondary-foreground: var(--background);
 
-  --third: 223, 38%, 77%;
+  --third: 223 38% 77%;
   --third-foreground: var(--foreground);
 
-  --muted: 227, 45%, 52%;
+  --muted: 227 45% 52%;
 
-  --accent: 333, 47%, 72%;
+  --accent: 333 47% 72%;
 
   --radius: 0.75rem;
 }
@@ -88,5 +88,16 @@ h6 {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .section-title {
+    font-size: 12rem;
+    line-height: 0.8;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 0.01em hsl(var(--accent));
+    letter-spacing: -0.01em;
+    filter: drop-shadow(calc(0.01em * -1) calc(0.01em * 1) 0 hsl(var(--accent)))
+      drop-shadow(calc(0.01em * -2) calc(0.01em * 2) 0 hsl(var(--accent)));
   }
 }
