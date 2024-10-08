@@ -42,7 +42,7 @@ export function Header() {
                   <Button
                     size={isMobile ? "sm" : "default"}
                     className={cn({
-                      "shadow-hover-button":
+                      "shadow-accent":
                         hoveredItem === item.href || (hoveredItem === null && isItemActive(item.href, segment))
                     })}
                     asChild

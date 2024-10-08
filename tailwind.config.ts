@@ -52,7 +52,7 @@ const config: Config = {
         "5xl": "2.5rem"
       },
       boxShadow: {
-        "hover-button": "-0.1em 0.1em 0 0 hsl(var(--accent)), -0.2em 0.2em 0 0 hsl(var(--accent))",
+        accent: "-0.1em 0.1em 0 0 hsl(var(--accent)), -0.2em 0.2em 0 0 hsl(var(--accent))",
         "fun-fact": "-0.1em 0.1em 0 0 hsl(var(--secondary)), -0.2em 0.2em 0 0 hsl(var(--secondary))"
       },
       dropShadow: {
