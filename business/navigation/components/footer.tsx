@@ -16,7 +16,7 @@ export const Footer = async () => {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-3">
           <div>
-            <h1 className="text-4xl font-semibold uppercase">Curious?</h1>
+            <h1 className="text-3xl font-semibold uppercase">Curious?</h1>
             <p className="relative text-sm text-muted">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, vel libero voluptate similique expedita id
               laborum beatae ab iusto dolores veritatis rerum ipsa voluptatibus voluptatum, quibusdam optio et magni

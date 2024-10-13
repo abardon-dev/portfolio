@@ -2,7 +2,7 @@ import { ArrowDownDoubleIcon } from "hugeicons-react";
 import Image from "next/image";
 
 export const HeroSection = () => (
-  <section className="py-10 text-center sm:mt-20 sm:py-20">
+  <section className="text-center">
     {/**TODO: Try to clamp the text on mobile (+ desktop if looks good) */}
     <div className="flex flex-col items-center gap-6">
       <Image priority src="/img/react-logo.svg" alt="React logo" width={48} height={48} />

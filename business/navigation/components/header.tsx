@@ -62,7 +62,7 @@ export function Header() {
           <AnimatePresence>
             {isScrollStarted && (
               <motion.div
-                className="z-0"
+                className="z-0 max-sm:hidden"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}

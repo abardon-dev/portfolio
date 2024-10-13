@@ -45,7 +45,7 @@ export default function RootLayout({
           <SocialMedias />
         </div>
 
-        <main className="space-y-10 px-12 2xl:container sm:px-20">{children}</main>
+        <main className="space-y-10 px-12 py-10 2xl:container sm:mt-20 sm:px-20 sm:pt-20">{children}</main>
         <Footer />
       </body>
     </html>

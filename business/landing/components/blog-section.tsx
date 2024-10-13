@@ -1,4 +1,5 @@
-import { BlogResume } from "@/business/blog/components/blog-resume";
+import { BlogArticleResume } from "@/business/blog/components/blog-article-resume";
+import { blogArticlesResume } from "@/business/blog/constants/blog-constants";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,32 +15,17 @@ export const BlogSection = () => (
     </div>
 
     <div className="flex flex-col items-start gap-3 sm:flex-row">
-      <h2 className="font-mono text-4xl font-semibold uppercase">Recent blog posts</h2>
+      <h2 className="font-mono text-3xl font-semibold uppercase">Recent blog posts</h2>
       <Button className="lg:hidden" variant={"secondary"} asChild size={"sm"}>
         <Link href={"/blog"}>See more</Link>
       </Button>
     </div>
 
-    <div className="grid gap-10 lg:grid-cols-3 xl:grid-cols-2">
-      <div className="flex flex-col gap-4 lg:col-span-2 xl:col-span-1">
-        <BlogResume
-          title="Heading title"
-          resume="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-          readTime={5}
-          categories={["React", "Next.js"]}
-        />
-        <BlogResume
-          title="Heading title"
-          resume="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-          readTime={7}
-          categories={["React", "Next.js"]}
-        />
-        <BlogResume
-          title="Heading title"
-          resume="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-          readTime={3}
-          categories={["React", "Next.js"]}
-        />
+    <div className="grid gap-10 lg:grid-cols-3">
+      <div className="flex flex-col gap-4 lg:col-span-2">
+        {blogArticlesResume.slice(0, 3).map((article) => (
+          <BlogArticleResume key={article.title} articleResume={article} />
+        ))}
       </div>
 
       <div className="flex h-full flex-col items-center justify-center gap-2 max-lg:hidden lg:px-5 xl:px-20">
