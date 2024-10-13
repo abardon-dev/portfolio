@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 type BlogResumeProps = {
   title: string;
@@ -29,6 +30,14 @@ export const BlogResume = ({ title, resume, readTime, categories }: BlogResumePr
       </div>
       <div className="relative aspect-[3/1] w-full shrink-0 @sm:aspect-[3/2] @sm:h-full @sm:w-fit">
         <div className="size-full rounded-t-md bg-gray-400 @sm:rounded-md" />
+        <Image
+          className="rounded-t-md @sm:rounded-md"
+          src={"/img/blog-article-thumbnail.webp"}
+          alt="Blog article thumbnail"
+          fill
+          priority
+          objectFit={"cover"}
+        />
 
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 @sm:hidden">
           {categories.map((category) => (
