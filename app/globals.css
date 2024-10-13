@@ -90,6 +90,12 @@ h6 {
     text-wrap: balance;
   }
 
+  .glass-bg {
+    background: hsl(var(--secondary) / 20%);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
   .section-title {
     font-size: 12rem;
     line-height: 0.8;

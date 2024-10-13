@@ -26,8 +26,13 @@ export function Header() {
   const isScrollStarted = scrollPosition > 20;
 
   return (
-    <header className="fixed bottom-10 z-50 h-fit w-full sm:top-10">
-      <div className="mx-auto flex items-end justify-center gap-6 px-4 sm:gap-10">
+    <header
+      className={cn(
+        "fixed bottom-10 left-1/2 z-50 h-fit -translate-x-1/2 rounded-full p-2 transition-colors duration-300 sm:top-10",
+        { "glass-bg": isScrollStarted }
+      )}
+    >
+      <div className="flex items-end justify-center gap-6 px-4 sm:gap-10">
         <div className="flex justify-center gap-6 max-sm:flex-wrap-reverse sm:gap-10">
           <nav className="z-10">
             <ul className="flex space-x-4 sm:space-x-8">
