@@ -12,7 +12,8 @@ const buttonVariants = cva(
           "bg-primary text-primary-foreground font-black focus-visible:shadow-accent hover:shadow-accent transition-shadow ease-out duration-500",
         secondary:
           "bg-secondary text-secondary-foreground font-black focus-visible:shadow-accent hover:shadow-accent transition-shadow ease-out duration-500",
-        link: "text-lg text-primary underline-offset-4 decoration-wavy decoration-accent decoration-1 hover:underline focus:underline"
+        link: "text-lg text-primary underline-offset-4 decoration-wavy decoration-accent decoration-[0.075em] hover:underline focus:underline",
+        ghost: "font-sans text-sm font-medium hover:bg-primary/10 rounded-md hover:text-accent-foreground"
       },
       size: {
         default: "h-10 px-4 py-3",

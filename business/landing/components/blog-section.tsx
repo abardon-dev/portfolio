@@ -16,7 +16,7 @@ export const BlogSection = () => (
     <div className="flex flex-col items-start gap-3 sm:flex-row">
       <h2 className="font-mono text-4xl font-semibold uppercase">Recent blog posts</h2>
       <Button className="lg:hidden" variant={"secondary"} asChild size={"sm"}>
-        <Link href={"/blog"}>See more</Link>
+        <Link href={"/blogs"}>See more</Link>
       </Button>
     </div>
 
@@ -51,7 +51,7 @@ export const BlogSection = () => (
           consectetur adipisicing elit. Voluptas, quis.
         </p>
         <Button className="mt-4" variant={"secondary"} asChild>
-          <Link href={"/blog"}>See more</Link>
+          <Link href={"/blogs"}>See more</Link>
         </Button>
       </div>
     </div>
