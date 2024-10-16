@@ -1,4 +1,4 @@
-import { BlogResume } from "../blog-resume";
+import { BlogResume } from "./blog-resume";
 
 export const PopularBlogPosts = () => (
   <section className="space-y-3">
