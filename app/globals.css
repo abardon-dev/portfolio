@@ -17,6 +17,7 @@
   --muted: 227 45% 52%;
 
   --accent: 333 47% 72%;
+  --accent-foreground: var(--background);
 
   --radius: 0.75rem;
 }
