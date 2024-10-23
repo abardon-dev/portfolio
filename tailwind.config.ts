@@ -42,7 +42,8 @@ const config: Config = {
           DEFAULT: "hsl(var(--muted))"
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))"
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))"
         }
       },
       borderRadius: {
@@ -75,6 +76,9 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" }
         }
+      },
+      transitionProperty: {
+        "filter-transform": "filter, transform"
       }
     }
   },
