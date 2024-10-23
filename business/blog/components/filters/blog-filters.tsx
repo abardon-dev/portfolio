@@ -1,10 +1,10 @@
 "use client";
 
-import { SortByDateButton } from "./filters/sort-by-date-button";
-import { MultiSelectTags } from "./filters/multi-select-tags";
-import { MaxReadTimeSelect } from "./filters/max-read-time-select";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
+import { MaxReadTimeSelect } from "./max-read-time-select";
+import { MultiSelectTags } from "./multi-select-tags";
+import { SortByDateButton } from "./sort-by-date-button";
 
 export const BlogFilters = () => {
   const [isSticky, setIsSticky] = useState<boolean>(false);
