@@ -58,12 +58,22 @@ const config: Config = {
         "hover-button": ["-0.1em 0.1em 0 hsl(var(--accent))", "-0.2em 0.2em 0 hsl(var(--accent))"]
       },
       animation: {
-        bump: "bump 0.3s ease-out"
+        bump: "bump 0.3s ease-out",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out"
       },
       keyframes: {
         bump: {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.2)" }
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" }
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" }
         }
       }
     }

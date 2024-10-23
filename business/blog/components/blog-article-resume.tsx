@@ -2,6 +2,9 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import { TBlogArticleResume } from "../constants/blog-constants";
+import Link from "next/link";
+import { PropsWithChildren } from "react";
+import { encodeArticleTitle } from "@/business/article/utils/article-utils";
 
 type BlogArticleResumeProps = {
   variant?: "horizontal" | "vertical";
@@ -9,19 +12,21 @@ type BlogArticleResumeProps = {
 };
 
 export const BlogArticleResume = ({ variant = "horizontal", articleResume }: BlogArticleResumeProps) => (
-  <Container>
-    <div
-      className={cn("flex w-full flex-col-reverse gap-3 overflow-hidden", {
-        "@md:flex-row @md:px-6 @md:py-4": variant === "horizontal"
-      })}
-    >
-      <ResumeContent articleResume={articleResume} variant={variant} />
-      <ThumbnailSection categories={articleResume.categories} variant={variant} />
-    </div>
-  </Container>
+  <Link href={`/blog/${encodeArticleTitle(articleResume.title, articleResume.id)}`}>
+    <Container>
+      <div
+        className={cn("flex w-full flex-col-reverse gap-3 overflow-hidden", {
+          "@md:flex-row @md:px-6 @md:py-4": variant === "horizontal"
+        })}
+      >
+        <ResumeContent articleResume={articleResume} variant={variant} />
+        <ThumbnailSection categories={articleResume.categories} variant={variant} />
+      </div>
+    </Container>
+  </Link>
 );
 
-const Container = ({ children }: { children: React.ReactNode }) => (
+const Container = ({ children }: PropsWithChildren) => (
   <div
     tabIndex={0}
     className="flex size-full cursor-pointer rounded-xl bg-background shadow-md transition-shadow duration-500 ease-out @container hover:shadow-accent"
