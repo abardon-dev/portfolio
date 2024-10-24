@@ -146,5 +146,28 @@ const data = [
 ];
 
 export default function About() {
-  return <Timeline data={data} />;
+  return (
+    <div>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <h1>About</h1>
+      <Timeline data={data} />
+    </div>
+  );
 }
