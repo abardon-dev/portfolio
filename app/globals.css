@@ -108,4 +108,18 @@ h6 {
     filter: drop-shadow(calc(0.01em * -1) calc(0.01em * 1) 0 hsl(var(--accent)))
       drop-shadow(calc(0.01em * -2) calc(0.01em * 2) 0 hsl(var(--accent)));
   }
+
+  .lamp-effect {
+    opacity: 0;
+    background-image: radial-gradient(
+      ellipse 80% 80% at 50% -20%,
+      hsla(var(--primary-foreground) / 0.2),
+      hsla(0, 0%, 100%, 0)
+    );
+    transition: opacity 0.7s cubic-bezier(0, 0, 0, 1);
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
