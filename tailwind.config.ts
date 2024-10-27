@@ -78,7 +78,8 @@ const config: Config = {
         }
       },
       transitionProperty: {
-        "filter-transform": "filter, transform"
+        "filter-transform": "filter, transform",
+        "transform-top-left": "transform, top, left"
       }
     }
   },
