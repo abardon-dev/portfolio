@@ -8,14 +8,14 @@ export const BlogSection = () => (
   <section className="space-y-6">
     <div>
       <h1 className="section-title max-sm:text-9xl">Blog</h1>
-      <p className="max-sm:text-sm">
+      <p className="font-medium max-sm:text-sm">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil hic ipsum quas sed saepe excepturi ducimus,
         voluptatem asperiores eligendi vel molestias ullam iure possimus recusandae a, culpa nisi earum commodi!
       </p>
     </div>
 
     <div className="flex flex-col items-start gap-3 sm:flex-row">
-      <h2 className="font-mono text-3xl font-semibold uppercase">Recent blog posts</h2>
+      <h2 className="text-4xl font-bold uppercase sm:text-5xl">Recent blog posts</h2>
       <Button className="lg:hidden" variant={"secondary"} asChild size={"sm"}>
         <Link href={"/blog"}>See more</Link>
       </Button>

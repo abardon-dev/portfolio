@@ -51,8 +51,8 @@ export const SoftSkillsGrid = ({ cards }: SoftSkillsGrid) => {
           <DotPattern className={cn("[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]")} />
 
           <Icon className="mb-4 size-8 rounded-full bg-accent p-1 text-primary md:size-9 md:p-1.5" />
-          <h2 className="mb-2 text-xl font-bold sm:text-2xl md:text-3xl">{title}</h2>
-          <p className="text-xs text-primary-foreground sm:text-sm">{description}</p>
+          <h2 className="mb-2 text-2xl font-bold md:text-3xl">{title}</h2>
+          <p className="text-sm text-primary-foreground">{description}</p>
         </div>
       ))}
     </div>

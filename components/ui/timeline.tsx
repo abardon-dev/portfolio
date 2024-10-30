@@ -101,8 +101,8 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                   style={{ objectFit: "cover" }}
                 />
                 <div className={cn("flex flex-col", { "md:items-end": !isEven })}>
-                  <h3 className="text-xl font-bold text-primary md:text-3xl">{item.title}</h3>
-                  {Boolean(item.description) && <h4 className="text-primary md:text-lg">{item.description}</h4>}
+                  <h3 className="text-2xl font-bold text-primary md:text-3xl">{item.title}</h3>
+                  {Boolean(item.description) && <h4 className="text-lg text-primary sm:text-xl">{item.description}</h4>}
                 </div>
               </div>
 
@@ -118,24 +118,24 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                 <div className={cn("space-y-2 text-justify md:space-y-3")}>
                   <div className={cn("flex items-center gap-2", { "md:flex-row-reverse": isEven })}>
                     <Image
-                      className="size-8 md:size-12"
+                      className="size-10 md:size-12"
                       src={"/img/react-logo.svg"}
                       alt={item.img.alt}
                       width={48}
                       height={48}
                     />
-                    <h5 className="text-xl font-bold md:text-3xl">Winggy</h5>
+                    <h5 className="text-2xl font-bold md:text-3xl">Winggy</h5>
                   </div>
 
-                  <p className="text-xs md:text-sm">
+                  <p className="max-sm:text-sm">
                     Plateforme pour la transition écologique dans le domaine du tourisme. Elle permet aux professionnels
                     de réduire considérablement leur impact environmental, de suivre cette évolution au fil des années
                     et de communiquer sur leur engagement auprès de leurs clients.
                   </p>
 
                   <div className="flex flex-col">
-                    <h6 className="text-base md:text-xl">Missions :</h6>
-                    <ul className="text-pretty text-xs md:text-sm">
+                    <h6 className="text-2xl font-medium">Missions :</h6>
+                    <ul className="text-pretty max-sm:text-sm">
                       <li>{"Développement d'un Saas multi-services, internationalisable (+10 personnes)"}</li>
                       <li>{"Mise en place de l'architecture, déploiement continu, tests, revue de code, etc."}</li>
                       <li>Tablet first pour simplifier la saisie sur le terrain</li>

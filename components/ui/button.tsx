@@ -12,12 +12,12 @@ const buttonVariants = cva(
           "bg-primary text-primary-foreground font-black focus-visible:shadow-accent hover:shadow-accent transition-shadow ease-out duration-500",
         secondary:
           "bg-secondary text-secondary-foreground font-black focus-visible:shadow-accent hover:shadow-accent transition-shadow ease-out duration-500",
-        link: "text-lg text-primary underline-offset-4 decoration-wavy decoration-accent decoration-[0.075em] hover:underline focus:underline",
+        link: "text-xl text-primary underline-offset-4 decoration-wavy decoration-accent decoration-[0.075em] hover:underline focus:underline",
         ghost: "font-sans text-sm font-medium hover:bg-primary/10 rounded-md hover:text-primary"
       },
       size: {
         default: "h-10 px-4 py-3",
-        sm: "h-8 px-3 py-2 text-lg",
+        sm: "h-8 px-3 py-2 text-xl",
         icon: "h-9 w-9"
       }
     },
