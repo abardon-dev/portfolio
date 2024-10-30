@@ -88,7 +88,7 @@ export default function About() {
     <div className="space-y-6">
       <div className="flex flex-col items-center justify-center">
         <div className="mb-10 text-center">
-          <h2 className="text-5xl font-black uppercase sm:text-7xl">Current stack</h2>
+          <h2 className="text-4xl font-bold uppercase sm:text-5xl">Current stack</h2>
           <p className="font-medium sm:text-lg">A small list of my favorite tools to build my projects</p>
         </div>
         <HardSkills skills={items} />
@@ -127,7 +127,7 @@ export default function About() {
       </div>
 
       <div className="space-y-6">
-        <h2 className="text-5xl font-black uppercase sm:text-7xl">My journey</h2>
+        <h2 className="text-4xl font-bold uppercase sm:text-5xl">My journey</h2>
         <Timeline data={data} />
       </div>
     </div>

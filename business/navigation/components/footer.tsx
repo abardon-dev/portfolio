@@ -16,8 +16,8 @@ export const Footer = async () => {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-3">
           <div>
-            <h1 className="text-3xl font-semibold uppercase">Curious?</h1>
-            <p className="relative text-sm text-muted">
+            <h1 className="text-4xl font-bold uppercase sm:text-5xl">Curious?</h1>
+            <p className="relative text-sm text-muted sm:text-base">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, vel libero voluptate similique expedita id
               laborum beatae ab iusto dolores veritatis rerum ipsa voluptatibus voluptatum, quibusdam optio et magni
               maiores.
@@ -37,7 +37,7 @@ export const Footer = async () => {
         </div>
 
         <div className="flex flex-col gap-2 sm:items-end">
-          <h2 className="text-2xl font-semibold">NAVIGATION</h2>
+          <h2 className="text-2xl font-semibold sm:text-3xl">NAVIGATION</h2>
           <nav>
             <ul className="flex flex-col">
               {navItems.map((item) => (
@@ -52,7 +52,7 @@ export const Footer = async () => {
         </div>
 
         <div className="flex w-full justify-between gap-6 max-sm:flex-col-reverse sm:col-span-2 sm:gap-10">
-          <div className="font-mono text-5xl font-bold">
+          <div className="font-mono text-5xl font-bold sm:text-6xl">
             <p>© {new Date().getFullYear()}</p>
             <p>ARTHUR BARDON</p>
           </div>
