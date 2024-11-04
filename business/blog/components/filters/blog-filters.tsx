@@ -6,7 +6,11 @@ import { MaxReadTimeSelect } from "./max-read-time-select";
 import { MultiSelectTags } from "./multi-select-tags";
 import { SortByDateButton } from "./sort-by-date-button";
 
-export const BlogFilters = () => {
+type BlogFiltersProps = {
+  availableTags: string[];
+};
+
+export const BlogFilters = ({ availableTags }: BlogFiltersProps) => {
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const filterSectionRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +43,7 @@ export const BlogFilters = () => {
         })}
       >
         <div className="flex justify-between gap-3">
-          <MultiSelectTags tags={["react", "next.js", "typescript", "node.js", "tailwindcss"]} />
+          <MultiSelectTags tags={availableTags} />
           <div className="flex gap-3">
             <MaxReadTimeSelect />
             <SortByDateButton />
