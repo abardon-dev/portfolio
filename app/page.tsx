@@ -7,6 +7,7 @@ export default function Home() {
     <>
       <HeroSection />
       <AboutMeSection />
+      {/**TODO: Wrap with Suspense ? */}
       <BlogSection />
     </>
   );

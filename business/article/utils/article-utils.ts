@@ -1,21 +1,18 @@
-import { z } from "zod";
-
-export const encodeArticleTitle = (title: string, id: number) =>
+export const encodeArticleTitle = (title: string, documentId: string) =>
   `${encodeURIComponent(
     title
       .toLocaleLowerCase()
       .replace(/[^\w\s-]/g, "") // Remove special characters
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .trim()
-  )}-${id}`;
+  )}-${documentId}`;
 
-export const extractIdFromEncodedArticleTitle = (encodedTitle: string): number => {
-  const id = encodedTitle.split("-").pop();
+export const extractDocumentIdFromEncodedArticleTitle = (encodedTitle: string): string => {
+  const documentId = encodedTitle.split("-").pop();
 
-  const parseResult = z.coerce.number().safeParse(id);
-  if (parseResult.success) {
-    return parseResult.data;
+  if (documentId === undefined) {
+    throw new Error(`Invalid article document id: ${encodedTitle}`);
   }
 
-  throw new Error(`Invalid article id: ${id}`);
+  return documentId;
 };

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { TBlogArticleResume } from "../../blog/constants/blog-constants";
 import { ArrowLeft, Calendar } from "lucide-react";
 import Link from "next/link";
 import { ShareArticleButton } from "./share-article-button";
@@ -7,14 +6,15 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AccordionContent } from "@radix-ui/react-accordion";
+import { TArticleResume } from "@/api/article";
 
 type BlogArticleProps = {
-  articleResume: TBlogArticleResume;
+  article: TArticleResume;
 };
 
-export const BlogArticle = ({ articleResume }: BlogArticleProps) => (
+export const BlogArticle = ({ article }: BlogArticleProps) => (
   <section className="space-y-8">
-    <BlogArticleHeader articleResume={articleResume} />
+    <BlogArticleHeader article={article} />
     <section className="flex flex-col gap-4 lg:flex-row lg:gap-8">
       {/**Mobile and tablet table of contents */}
       <Accordion className="w-full lg:hidden" type="single" collapsible>
@@ -39,7 +39,7 @@ export const BlogArticle = ({ articleResume }: BlogArticleProps) => (
   </section>
 );
 
-const BlogArticleHeader = ({ articleResume }: BlogArticleProps) => (
+const BlogArticleHeader = ({ article }: BlogArticleProps) => (
   <>
     <div className="flex w-full justify-between">
       <Button className="font-sans text-sm" variant={"ghost"} asChild>
@@ -57,25 +57,25 @@ const BlogArticleHeader = ({ articleResume }: BlogArticleProps) => (
         {/**TODO: Handle a LocaleDateTime */}
         <div className="flex items-center gap-2 text-sm uppercase text-primary/70">
           <Calendar className="mb-0.5 size-5 stroke-primary/70 stroke-[1.5]" />
-          <p>{articleResume.date.toLocaleDateString(undefined, { dateStyle: "medium" })}</p>
+          <p>{article.createdAt.toLocaleDateString(undefined, { dateStyle: "medium" })}</p>
 
           <span>-</span>
 
-          <p className="lowercase">{articleResume.readTime} min read</p>
+          <p className="lowercase">{article.readTime} min read</p>
         </div>
 
         <div className="flex gap-2">
-          {articleResume.categories.map((category) => (
-            <Badge key={category} size={"lg"}>
-              {category}
+          {article.tags.map(({ name }) => (
+            <Badge key={name} size={"lg"}>
+              {name}
             </Badge>
           ))}
         </div>
       </div>
 
       <div className="space-y-4">
-        <h1 className="text-pretty font-sans text-6xl font-bold">{articleResume.title}</h1>
-        <p className="text-primary">{articleResume.resume}</p>
+        <h1 className="text-pretty font-sans text-6xl font-bold">{article.title}</h1>
+        <p className="text-primary">{article.resume}</p>
       </div>
     </section>
 

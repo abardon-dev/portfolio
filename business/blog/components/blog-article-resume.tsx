@@ -1,18 +1,18 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
-import { TBlogArticleResume } from "../constants/blog-constants";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { encodeArticleTitle } from "@/business/article/utils/article-utils";
+import { TArticleResume } from "@/api/article";
 
 type BlogArticleResumeProps = {
   variant?: "horizontal" | "vertical";
-  articleResume: TBlogArticleResume;
+  articleResume: TArticleResume;
 };
 
 export const BlogArticleResume = ({ variant = "horizontal", articleResume }: BlogArticleResumeProps) => (
-  <Link href={`/blog/${encodeArticleTitle(articleResume.title, articleResume.id)}`}>
+  <Link href={`/blog/${encodeArticleTitle(articleResume.title, articleResume.documentId)}`}>
     <Container>
       <div
         className={cn("flex w-full flex-col-reverse gap-3 overflow-hidden", {
@@ -20,7 +20,7 @@ export const BlogArticleResume = ({ variant = "horizontal", articleResume }: Blo
         })}
       >
         <ResumeContent articleResume={articleResume} variant={variant} />
-        <ThumbnailSection categories={articleResume.categories} variant={variant} />
+        <ThumbnailSection tags={articleResume.tags} variant={variant} />
       </div>
     </Container>
   </Link>
@@ -35,15 +35,15 @@ const Container = ({ children }: PropsWithChildren) => (
   </div>
 );
 
-const ResumeContent = ({ articleResume: { title, resume, readTime, categories }, variant }: BlogArticleResumeProps) => (
+const ResumeContent = ({ articleResume: { title, resume, readTime, tags }, variant }: BlogArticleResumeProps) => (
   <div
     className={cn("flex size-full flex-col gap-2 overflow-x-hidden px-4 pb-3", {
       "@md:p-0": variant === "horizontal"
     })}
   >
     <div className={cn("hidden gap-1.5", { "@md:flex": variant === "horizontal" })}>
-      {categories.map((category) => (
-        <Badge key={category}>{category}</Badge>
+      {tags.map(({ name }) => (
+        <Badge key={name}>{name}</Badge>
       ))}
     </div>
 
@@ -73,9 +73,9 @@ const ResumeContent = ({ articleResume: { title, resume, readTime, categories },
 );
 
 const ThumbnailSection = ({
-  categories,
+  tags,
   variant
-}: Pick<TBlogArticleResume, "categories"> & Pick<BlogArticleResumeProps, "variant">) => (
+}: Pick<TArticleResume, "tags"> & Pick<BlogArticleResumeProps, "variant">) => (
   <div
     className={cn("relative my-auto h-20 w-full shrink-0", {
       "@md:w-48": variant === "horizontal",
@@ -95,9 +95,9 @@ const ThumbnailSection = ({
     />
 
     <div className={cn("absolute left-3 top-3 flex flex-wrap gap-1.5", { "@md:hidden": variant === "horizontal" })}>
-      {categories.map((category) => (
-        <Badge key={category} variant={"secondary"}>
-          {category}
+      {tags.map(({ name }) => (
+        <Badge key={name} variant={"secondary"}>
+          {name}
         </Badge>
       ))}
     </div>

@@ -3,8 +3,10 @@ export type GetRequestOptions = Omit<RequestInit, "method">;
 export type PutRequestOptions = Omit<RequestInit, "body" | "method">;
 export type DeleteRequestOptions = Omit<RequestInit, "method">;
 
-type StrapiResponse<T> = {
-  data: T;
+export type StrapiDataResponse<T> = { id: number; documentId: string } & Omit<T, "id" | "documentId">;
+
+export type StrapiResponse<T> = {
+  data: StrapiDataResponse<T>;
   meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } };
 };
 
@@ -23,7 +25,8 @@ const withBaseUrl = (url: string | URL | Request) => `${BASE_URL}/${url}`;
 
 const handleResponse = <TResponse>(res: Response) => {
   if (!res.ok) {
-    throw new Error(`Failed to fetch data ${res.text()}`);
+    console.error(res);
+    throw new Error(`Failed to fetch data`);
   }
 
   return res.json() as Promise<StrapiResponse<TResponse>>;

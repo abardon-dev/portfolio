@@ -1,21 +1,17 @@
+import { getArticleById } from "@/api/article";
 import { BlogArticle } from "@/business/article/components/blog-article";
-import { extractIdFromEncodedArticleTitle } from "@/business/article/utils/article-utils";
-import { blogArticlesResume } from "@/business/blog/constants/blog-constants";
+import { ViewCounter } from "@/business/article/components/view-counter";
+import { extractDocumentIdFromEncodedArticleTitle } from "@/business/article/utils/article-utils";
 
-export default function BlogArticlePage({ params }: { params: { article: string } }) {
-  let article = null;
+//TODO: Handle error and throws by extracting the article id
+export default async function BlogArticlePage({ params }: { params: { article: string } }) {
+  const givenArticleDocumentId = extractDocumentIdFromEncodedArticleTitle(params.article);
+  const article = await getArticleById(givenArticleDocumentId);
 
-  try {
-    const givenArticleId = extractIdFromEncodedArticleTitle(params.article);
-    article = blogArticlesResume.find((article) => article.id === givenArticleId);
-  } catch (error) {
-    console.log(error);
-  }
-
-  //TODO: Handle 404
-  if (!article) {
-    return <div>Article not found</div>;
-  }
-
-  return <BlogArticle articleResume={article} />;
+  return (
+    <>
+      <ViewCounter articleDocumentId={article.documentId} />
+      <BlogArticle article={article} />
+    </>
+  );
 }

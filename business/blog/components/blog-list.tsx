@@ -1,47 +1,26 @@
-"use client";
-
-import { BlogArticleResume } from "./blog-article-resume";
-import { useMaxReadTime, useSortOrder, useTags } from "../hooks/use-blog-filters";
-import { blogArticlesResume } from "../constants/blog-constants";
 import { groupByMonthAndYear } from "../utils/blog-utils";
-import React, { useEffect, useRef } from "react";
-import { BlogFilters } from "./filters/blog-filters";
+import React from "react";
+import { BlogListContainer } from "./blog-list-container";
+import { getArticleTags } from "@/api/article-tag";
+import { getArticleResumes } from "@/api/article";
+import { BlogArticleResume } from "./blog-article-resume";
 
-type BlogListProps = {
-  availableTags: string[];
-};
+//TODO: If tag failed it should not avoid to display the list
+//TODO: Handle the error if data can't be fetched
+export const BlogList = async () => {
+  //TODO: Handle data invalidation for article resumes
+  //TODO: Look for bypassed cache sometimes
+  const [tags, articleResumesResponse] = await Promise.all([
+    getArticleTags({ next: { tags: ["article-tags"] } }),
+    getArticleResumes()
+  ]);
 
-export const BlogList = ({ availableTags }: BlogListProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const [tags] = useTags({ availableTags });
-  const [sortOrder] = useSortOrder();
-  const [maxReadTime] = useMaxReadTime();
-
-  useEffect(
-    function scrollOnFilterChange() {
-      if (containerRef.current) {
-        const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
-        const currentScroll = window.scrollY;
-
-        // Define the offset value (e.g., 120px above the container)
-        const offset = 120;
-
-        // Scroll only if the current scroll position is below the container
-        if (currentScroll > containerTop - offset) {
-          window.scrollTo({ top: containerTop - offset, behavior: "smooth" });
-        }
-      }
-    },
-    [tags, sortOrder, maxReadTime]
-  );
+  const { data: articleResumes } = articleResumesResponse;
 
   return (
-    <section ref={containerRef} className="relative space-y-4">
-      <BlogFilters availableTags={availableTags} />
-
+    <BlogListContainer availableTags={tags}>
       <section className="mx-auto flex w-full flex-col gap-4 lg:w-4/5">
-        {Object.entries(groupByMonthAndYear(blogArticlesResume)).map(([date, articles]) => (
+        {Object.entries(groupByMonthAndYear(articleResumes)).map(([date, articleResumes]) => (
           <React.Fragment key={date}>
             <div className="flex w-full items-center first:hidden">
               <hr className="h-0.5 w-full bg-accent" />
@@ -52,12 +31,12 @@ export const BlogList = ({ availableTags }: BlogListProps) => {
               </div>
               <hr className="my-2 h-0.5 w-full bg-accent" />
             </div>
-            {articles.map((article) => (
-              <BlogArticleResume key={article.title} articleResume={article} />
+            {articleResumes.map((articleResume) => (
+              <BlogArticleResume key={articleResume.title} articleResume={articleResume} />
             ))}
           </React.Fragment>
         ))}
       </section>
-    </section>
+    </BlogListContainer>
   );
 };
