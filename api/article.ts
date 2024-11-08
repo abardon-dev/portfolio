@@ -16,6 +16,7 @@ type TArticleResumeStrapiResponse = StrapiDataResponse<{
 }>;
 
 //TODO: Install the qs package to build the query string
+//TODO: Can be improved by sending only the id of the tags (the tags are already fetched with id and name)
 
 export type TArticleResume = StrapiDataResponse<
   Omit<TArticleResumeStrapiResponse, "createdAt" | "updatedAt"> & {
@@ -24,16 +25,25 @@ export type TArticleResume = StrapiDataResponse<
   }
 >;
 
-//TODO: Can be improved by sending only the id of the tags (the tags are already fetched with id and name)
-export const getArticleResumes = () =>
-  strapiClient.get<TArticleResumeStrapiResponse[]>("articles?populate=tags").then((res) => ({
-    ...res,
-    data: res.data.map((article) => ({
-      ...article,
-      createdAt: new Date(article.createdAt),
-      updatedAt: new Date(article.updatedAt)
-    }))
-  }));
+export const getPaginatedArticleResumesAPI = (pageOptions: { start: number; limit: number }) => {
+  const { start, limit } = pageOptions;
+
+  return strapiClient
+    .get<
+      TArticleResumeStrapiResponse[]
+    >(`articles?populate=tags&pagination[start]=${start}&pagination[limit]=${limit}&sort=createdAt:desc`)
+    .then((res) => {
+      console.log(res);
+      return {
+        ...res,
+        data: res.data.map((article) => ({
+          ...article,
+          createdAt: new Date(article.createdAt),
+          updatedAt: new Date(article.updatedAt)
+        }))
+      };
+    });
+};
 
 export const getPopularArticleResumes = (options?: GetRequestOptions) =>
   strapiClient
