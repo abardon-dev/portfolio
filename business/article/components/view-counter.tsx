@@ -1,17 +1,25 @@
 "use client";
 
 import { useEffect } from "react";
-import { increaseArticleViewCount } from "../actions/increase-article-view-count";
+import { getArticleViewsById, increaseArticleViewCountAPI } from "@/api/article";
 
-//FIXME: Use an ORM or make a new increment endpoint
-//TODO: Handle race condition
+//FIXME: Use Redis to update the view count
 export const ViewCounter = ({ articleDocumentId }: { articleDocumentId: string }) => {
   useEffect(() => {
+    const abortController = new AbortController();
+
     const updateViewCount = async () => {
-      await increaseArticleViewCount(articleDocumentId);
+      try {
+        const { nbViews } = await getArticleViewsById(articleDocumentId, { signal: abortController.signal });
+        await increaseArticleViewCountAPI(articleDocumentId, Number(nbViews) + 1, { signal: abortController.signal });
+      } catch (error) {
+        console.error("Unable to increase article view count", error);
+      }
     };
 
     updateViewCount();
+
+    return () => abortController.abort();
   }, [articleDocumentId]);
 
   return null;

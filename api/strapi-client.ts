@@ -10,8 +10,8 @@ export type StrapiResponse<T> = {
   meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } };
 };
 
-const BASE_URL = process.env.STRAPI_API_URL;
-const API_TOKEN = process.env.STRAPI_API_TOKEN;
+const BASE_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+const API_TOKEN = process.env.STRAPI_API_TOKEN || process.env.NEXT_PUBLIC_CLIENT_STRAPI_API_TOKEN;
 
 const defaultOptions: Omit<RequestInit, "method" | "body"> = {
   headers: {

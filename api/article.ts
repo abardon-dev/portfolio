@@ -53,9 +53,9 @@ export const getArticleById = (articleDocumentId: string) =>
     updatedAt: new Date(res.data.updatedAt)
   }));
 
-export const getArticleViewsById = (articleDocumentId: string) =>
+export const getArticleViewsById = (articleDocumentId: string, options?: GetRequestOptions) =>
   strapiClient
-    .get<Pick<TArticleResume, "nbViews">>(`articles/${articleDocumentId}?fields=nbViews`)
+    .get<Pick<TArticleResume, "nbViews">>(`articles/${articleDocumentId}?fields=nbViews`, options)
     .then((res) => res.data);
 
 export const increaseArticleViewCountAPI = (
