@@ -5,12 +5,16 @@ import { cn } from "@/utils/cn";
 import { MaxReadTimeSelect } from "./max-read-time-select";
 import { MultiSelectTags } from "./multi-select-tags";
 import { SortByDateButton } from "./sort-by-date-button";
+import { TArticleFilters } from "@/api/article";
+import { UseQueryStateOptions } from "nuqs";
 
 type BlogFiltersProps = {
   availableTags: string[];
+  filters: Required<TArticleFilters>;
+  setFilters: (filters: TArticleFilters, options?: UseQueryStateOptions<TArticleFilters>) => void;
 };
 
-export const BlogFilters = ({ availableTags }: BlogFiltersProps) => {
+export const BlogFilters = ({ availableTags, filters, setFilters }: BlogFiltersProps) => {
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const filterSectionRef = useRef<HTMLDivElement>(null);
 
@@ -43,10 +47,20 @@ export const BlogFilters = ({ availableTags }: BlogFiltersProps) => {
         })}
       >
         <div className="flex justify-between gap-3">
-          <MultiSelectTags tags={availableTags} />
+          <MultiSelectTags
+            availableTags={availableTags}
+            tags={filters.tags}
+            onTagsChange={(newTags) => setFilters({ ...filters, tags: newTags })}
+          />
           <div className="flex gap-3">
-            <MaxReadTimeSelect />
-            <SortByDateButton />
+            <MaxReadTimeSelect
+              maxReadTime={filters.maxReadTime}
+              onChange={(newMaxReadTime) => setFilters({ ...filters, maxReadTime: newMaxReadTime })}
+            />
+            <SortByDateButton
+              sort={filters.sortByDate}
+              onChange={(newSort) => setFilters({ ...filters, sortByDate: newSort })}
+            />
           </div>
         </div>
       </section>

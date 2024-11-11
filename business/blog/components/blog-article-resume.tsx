@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 import { encodeArticleTitle } from "@/business/article/utils/article-utils";
-import { TArticleResume } from "@/api/article";
+import { TArticle } from "@/api/article";
 
 type BlogArticleResumeProps = {
   variant?: "horizontal" | "vertical";
-  articleResume: TArticleResume;
+  articleResume: TArticle;
 };
 
 export const BlogArticleResume = ({ variant = "horizontal", articleResume }: BlogArticleResumeProps) => (
@@ -72,10 +72,7 @@ const ResumeContent = ({ articleResume: { title, resume, readTime, tags }, varia
   </div>
 );
 
-const ThumbnailSection = ({
-  tags,
-  variant
-}: Pick<TArticleResume, "tags"> & Pick<BlogArticleResumeProps, "variant">) => (
+const ThumbnailSection = ({ tags, variant }: Pick<TArticle, "tags"> & Pick<BlogArticleResumeProps, "variant">) => (
   <div
     className={cn("relative my-auto h-20 w-full shrink-0", {
       "@md:w-48": variant === "horizontal",

@@ -1,8 +1,8 @@
-import { getPopularArticleResumes } from "@/api/article";
+import { getPopularArticles } from "@/api/article";
 import { BlogArticleResume } from "./blog-article-resume";
 
 export const PopularBlogPosts = async () => {
-  const articleResumes = await getPopularArticleResumes({ next: { revalidate: 1800 /** 30 minutes */ } });
+  const articleResumes = await getPopularArticles({ next: { revalidate: 1800 /** 30 minutes */ } });
 
   return (
     <section className="space-y-3">

@@ -1,4 +1,4 @@
-export const NB_ARTICLES_FETCH_LIMIT = 10;
+export const ARTICLES_PAGE_SIZE = 10;
 
 export const READ_TIMES: number[] = [3, 5, 10, 15];
 

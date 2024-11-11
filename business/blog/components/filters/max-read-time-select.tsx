@@ -6,20 +6,23 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { ChevronsUpDown, Check } from "lucide-react";
 import { useState } from "react";
 import { READ_TIMES } from "../../constants/blog-constants";
-import { useMaxReadTime } from "../../hooks/use-blog-filters";
 
 const getOptionText = (option: number) => `< ${option} min`;
 
-export const MaxReadTimeSelect = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [selectedMaxReadTime, setSelectedMaxReadTime] = useMaxReadTime();
+type MaxReadTimeSelectProps = {
+  maxReadTime: number | null;
+  onChange: (maxReadTime: number | null) => void;
+};
 
-  const handleReadTimeToggle = (readTime: number) => {
+export const MaxReadTimeSelect = ({ maxReadTime, onChange }: MaxReadTimeSelectProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleReadTimeToggle = (newMaxReadTime: number) => {
     setOpen(false);
-    setSelectedMaxReadTime((prev) => (prev !== readTime ? readTime : null));
+    onChange(maxReadTime !== newMaxReadTime ? newMaxReadTime : null);
   };
 
-  const buttonText = selectedMaxReadTime === null ? "Select a read time" : getOptionText(selectedMaxReadTime);
+  const buttonText = maxReadTime === null ? "Select a read time" : getOptionText(maxReadTime);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -33,7 +36,7 @@ export const MaxReadTimeSelect = () => {
       <PopoverContent className="w-[180px] p-2">
         <ul className="max-h-[300px] overflow-auto">
           {[...READ_TIMES].map((readTime) => {
-            const isSelected = selectedMaxReadTime === readTime;
+            const isSelected = maxReadTime === readTime;
 
             return (
               <li

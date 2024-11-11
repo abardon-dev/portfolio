@@ -1,7 +1,9 @@
+import { SortOrder } from "@/business/blog/constants/blog-constants";
 import { TArticleTagResponse } from "./article-tag";
 import { GetRequestOptions, PutRequestOptions, StrapiDataResponse, strapiClient } from "./strapi-client";
+import { Arrays } from "@/utils/arrays";
 
-type TArticleResumeStrapiResponse = StrapiDataResponse<{
+type TArticleStrapiResponse = StrapiDataResponse<{
   title: string;
   resume: string;
   readTime: number;
@@ -18,36 +20,46 @@ type TArticleResumeStrapiResponse = StrapiDataResponse<{
 //TODO: Install the qs package to build the query string
 //TODO: Can be improved by sending only the id of the tags (the tags are already fetched with id and name)
 
-export type TArticleResume = StrapiDataResponse<
-  Omit<TArticleResumeStrapiResponse, "createdAt" | "updatedAt"> & {
+export type TArticle = StrapiDataResponse<
+  Omit<TArticleStrapiResponse, "createdAt" | "updatedAt"> & {
     createdAt: Date;
     updatedAt: Date;
   }
 >;
 
-export const getPaginatedArticleResumesAPI = (pageOptions: { start: number; limit: number }) => {
-  const { start, limit } = pageOptions;
+export type TArticleFilters = {
+  sortByDate?: SortOrder;
+  tags?: string[];
+  maxReadTime?: number | null;
+};
+
+export const getPaginatedArticles = (pageOptions: { page: number; size: number }, filters?: TArticleFilters) => {
+  const { page, size } = pageOptions;
+
+  const paginationQuery = `&pagination[page]=${page}&pagination[pageSize]=${size}`;
+  const sortByDataQuery = `&sort=createdAt:${filters?.sortByDate?.toLowerCase() || "desc"}`;
+  const tagsQuery = Arrays.isNotEmpty(filters?.tags)
+    ? `&${filters.tags.map((tag, index) => `filters[tags][name][$in][${index}]=${tag}`).join("&")}`
+    : "";
+  const maxReadTimeQuery = filters?.maxReadTime ? `&filters[readTime][$lte]=${filters.maxReadTime}` : "";
 
   return strapiClient
     .get<
-      TArticleResumeStrapiResponse[]
-    >(`articles?populate=tags&pagination[start]=${start}&pagination[limit]=${limit}&sort=createdAt:desc`)
-    .then((res) => {
-      console.log(res);
-      return {
-        ...res,
-        data: res.data.map((article) => ({
-          ...article,
-          createdAt: new Date(article.createdAt),
-          updatedAt: new Date(article.updatedAt)
-        }))
-      };
-    });
+      TArticleStrapiResponse[]
+    >(`articles?populate=tags${paginationQuery}${sortByDataQuery}${tagsQuery}${maxReadTimeQuery}`)
+    .then((res) => ({
+      ...res,
+      data: res.data.map((article) => ({
+        ...article,
+        createdAt: new Date(article.createdAt),
+        updatedAt: new Date(article.updatedAt)
+      }))
+    }));
 };
 
-export const getPopularArticleResumes = (options?: GetRequestOptions) =>
+export const getPopularArticles = (options?: GetRequestOptions) =>
   strapiClient
-    .get<TArticleResumeStrapiResponse[]>("articles?populate=tags&sort=nbViews:desc&pagination[limit]=3", options)
+    .get<TArticleStrapiResponse[]>("articles?populate=tags&sort=nbViews:desc&pagination[limit]=3", options)
     .then((res) =>
       res.data.map((article) => ({
         ...article,
@@ -57,7 +69,7 @@ export const getPopularArticleResumes = (options?: GetRequestOptions) =>
     );
 
 export const getArticleById = (articleDocumentId: string) =>
-  strapiClient.get<TArticleResumeStrapiResponse>(`articles/${articleDocumentId}?populate=tags`).then((res) => ({
+  strapiClient.get<TArticleStrapiResponse>(`articles/${articleDocumentId}?populate=tags`).then((res) => ({
     ...res.data,
     createdAt: new Date(res.data.createdAt),
     updatedAt: new Date(res.data.updatedAt)
@@ -65,7 +77,7 @@ export const getArticleById = (articleDocumentId: string) =>
 
 export const getArticleViewsById = (articleDocumentId: string, options?: GetRequestOptions) =>
   strapiClient
-    .get<Pick<TArticleResume, "nbViews">>(`articles/${articleDocumentId}?fields=nbViews`, options)
+    .get<Pick<TArticle, "nbViews">>(`articles/${articleDocumentId}?fields=nbViews`, options)
     .then((res) => res.data);
 
 export const increaseArticleViewCountAPI = (
@@ -73,7 +85,7 @@ export const increaseArticleViewCountAPI = (
   newViewCount: number,
   options?: PutRequestOptions
 ) =>
-  strapiClient.put<TArticleResumeStrapiResponse>(
+  strapiClient.put<TArticleStrapiResponse>(
     `articles/${articleDocumentId}`,
     { data: { nbViews: newViewCount } },
     options

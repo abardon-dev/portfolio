@@ -6,10 +6,10 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AccordionContent } from "@radix-ui/react-accordion";
-import { TArticleResume } from "@/api/article";
+import { TArticle } from "@/api/article";
 
 type BlogArticleProps = {
-  article: TArticleResume;
+  article: TArticle;
 };
 
 export const BlogArticle = ({ article }: BlogArticleProps) => (

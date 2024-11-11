@@ -5,16 +5,20 @@ import { cn } from "@/utils/cn";
 import { motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useState } from "react";
-import { useSortOrder } from "../../hooks/use-blog-filters";
+import { SortOrder } from "../../constants/blog-constants";
 
-export const SortByDateButton = () => {
-  const [sort, setSort] = useSortOrder();
+type SortByDateButtonProps = {
+  sort: SortOrder | null;
+  onChange: (newOrder: SortOrder) => void;
+};
+
+export const SortByDateButton = ({ sort, onChange }: SortByDateButtonProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleSortByDate = () => {
     if (!isAnimating) {
       setIsAnimating(true);
-      setSort((newSort) => (newSort === "ASC" ? "DESC" : "ASC"));
+      onChange(sort === "ASC" ? "DESC" : "ASC");
     }
   };
 

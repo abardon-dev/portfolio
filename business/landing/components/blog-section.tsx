@@ -1,11 +1,11 @@
-import { getPopularArticleResumes } from "@/api/article";
+import { getPopularArticles } from "@/api/article";
 import { BlogArticleResume } from "@/business/blog/components/blog-article-resume";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
 export const BlogSection = async () => {
-  const articleResumes = await getPopularArticleResumes({ next: { revalidate: 1800 /** 30 minutes */ } });
+  const articleResumes = await getPopularArticles({ next: { revalidate: 1800 /** 30 minutes */ } });
 
   return (
     <section className="space-y-6">

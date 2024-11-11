@@ -4,25 +4,20 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { ChevronsUpDown, Check } from "lucide-react";
-import { useTags } from "../../hooks/use-blog-filters";
+import { Arrays } from "@/utils/arrays";
 
 type MultiSelectTagsProps = {
+  availableTags: string[];
   tags: string[];
+  onTagsChange: (tags: string[]) => void;
 };
 
-export const MultiSelectTags = ({ tags }: MultiSelectTagsProps) => {
-  const [selectedTags, setSelectedTags] = useTags({ availableTags: tags });
-  const isSelectedTagsEmpty = selectedTags.length === 0;
-
+export const MultiSelectTags = ({ availableTags, tags, onTagsChange }: MultiSelectTagsProps) => {
   const handleTagItemToggle = (tag: string) => {
-    setSelectedTags((selectedTags) =>
-      selectedTags.includes(tag) ? selectedTags.filter((selectedTag) => selectedTag !== tag) : [...selectedTags, tag]
-    );
+    onTagsChange(tags.includes(tag) ? tags.filter((selectedTag) => selectedTag !== tag) : [...tags, tag]);
   };
 
-  const buttonText = isSelectedTagsEmpty
-    ? "Select a tag"
-    : `${selectedTags.length} selected tag${selectedTags.length > 1 ? "s" : ""}`;
+  const buttonText = Arrays.isEmpty(tags) ? "Select a tag" : `${tags.length} selected tag${tags.length > 1 ? "s" : ""}`;
 
   return (
     <div className="flex items-center gap-2">
@@ -49,8 +44,8 @@ export const MultiSelectTags = ({ tags }: MultiSelectTagsProps) => {
         </PopoverTrigger>
         <PopoverContent className="w-[150px] p-2">
           <ul className="max-h-[300px] overflow-auto">
-            {tags.map((tag) => {
-              const isSelected = selectedTags.includes(tag);
+            {availableTags.map((tag) => {
+              const isSelected = tags.includes(tag);
 
               return (
                 <li

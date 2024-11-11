@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useEffect, PropsWithChildren } from "react";
-import { useTags, useSortOrder, useMaxReadTime } from "../hooks/use-blog-filters";
 import { BlogFilters } from "./filters/blog-filters";
+import { useArticleFilters } from "@/business/article/hooks/use-article-filters";
 
 type BlogListContainerProps = {
   availableTags: string[];
@@ -10,10 +10,8 @@ type BlogListContainerProps = {
 
 export const BlogListContainer = ({ children, availableTags }: PropsWithChildren<BlogListContainerProps>) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const [tags] = useTags({ availableTags });
-  const [sortOrder] = useSortOrder();
-  const [maxReadTime] = useMaxReadTime();
+  const [filters, setFilters] = useArticleFilters({ availableTags });
+  const { tags, maxReadTime, sortByDate } = filters;
 
   useEffect(
     function scrollOnFilterChange() {
@@ -30,12 +28,12 @@ export const BlogListContainer = ({ children, availableTags }: PropsWithChildren
         }
       }
     },
-    [tags, sortOrder, maxReadTime]
+    [tags, sortByDate, maxReadTime]
   );
 
   return (
     <section ref={containerRef} className="relative space-y-4">
-      <BlogFilters availableTags={availableTags} />
+      <BlogFilters availableTags={availableTags} filters={filters} setFilters={setFilters} />
       {children}
     </section>
   );

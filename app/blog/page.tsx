@@ -1,10 +1,8 @@
-import { getPaginatedArticleResumesAPI } from "@/api/article";
 import { getArticleTags } from "@/api/article-tag";
 import { BlogHeroSection } from "@/business/blog/components/blog-hero-section";
 import { BlogList } from "@/business/blog/components/blog-list";
 import { BlogListContainer } from "@/business/blog/components/blog-list-container";
 import { PopularBlogPosts } from "@/business/blog/components/popular-blog-posts";
-import { NB_ARTICLES_FETCH_LIMIT } from "@/business/blog/constants/blog-constants";
 import { Suspense } from "react";
 
 export default function Blog() {
@@ -31,17 +29,13 @@ export default function Blog() {
 {
   /**TODO: Handle the suspense loading skeleton */
 }
-
 const BlogListWrapper = async () => {
   //TODO: Look for bypassed cache sometimes
-  const [tags, articleResumesResponse] = await Promise.all([
-    getArticleTags({ next: { tags: ["article-tags"] } }),
-    getPaginatedArticleResumesAPI({ start: 0, limit: NB_ARTICLES_FETCH_LIMIT })
-  ]);
+  const tags = await getArticleTags({ next: { tags: ["article-tags"] } });
 
   return (
     <BlogListContainer availableTags={tags}>
-      <BlogList initialArticles={articleResumesResponse.data} />
+      <BlogList availableTags={tags} />
     </BlogListContainer>
   );
 };

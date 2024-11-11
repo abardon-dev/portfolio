@@ -1,45 +1,33 @@
 "use client";
 
 import { groupByMonthAndYear } from "../utils/blog-utils";
-import React, { useState } from "react";
-import { TArticleResume } from "@/api/article";
+import React from "react";
 import { BlogArticleResume } from "./blog-article-resume";
-import { NB_ARTICLES_FETCH_LIMIT } from "../constants/blog-constants";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
-import { getPaginatedArticleResumes } from "../actions/get-paginated-article-resumes";
-
-type BlogListProps = {
-  initialArticles: TArticleResume[];
-};
+import { useArticleFilters } from "@/business/article/hooks/use-article-filters";
+import { useInfiniteArticles } from "@/business/article/hooks/use-article-queries";
+import { Arrays } from "@/utils/arrays";
+import { ARTICLES_PAGE_SIZE } from "../constants/blog-constants";
+import { Skeleton } from "@/components/ui/skeleton";
 
 //TODO: Add scrolling down to load more articles
 
-export const BlogList = ({ initialArticles }: BlogListProps) => {
-  const [articles, setArticles] = useState<TArticleResume[]>(initialArticles);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [offset, setOffset] = useState<number>(NB_ARTICLES_FETCH_LIMIT);
-  const [isLimitReached, setIsLimitReached] = useState<boolean>(false);
+export const BlogList = ({ availableTags }: { availableTags: string[] }) => {
+  const [filters] = useArticleFilters({ availableTags });
+  const { data, isFetchingNextPage, hasNextPage, fetchNextPage, isPending, isError } = useInfiniteArticles(filters);
 
-  const loadMoreArticles = async () => {
-    setIsLoading(true);
-    getPaginatedArticleResumes(offset)
-      .then((response) => {
-        const newArticles = response.data;
-        setArticles((prevArticles) => [...prevArticles, ...newArticles]);
+  const articles = data?.pages.flatMap((page) => page.data) || [];
 
-        const nextOffset = offset + NB_ARTICLES_FETCH_LIMIT;
+  if (isPending) {
+    return Array.from({ length: ARTICLES_PAGE_SIZE }).map((_, index) => (
+      <Skeleton className="mx-auto h-36 w-full lg:w-4/5" key={index} />
+    ));
+  }
 
-        if (nextOffset >= response.meta.pagination.total) {
-          setIsLimitReached(true);
-        } else {
-          setOffset(nextOffset);
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  if (isError || (!isError && Arrays.isEmpty(articles))) {
+    return <p className="mx-auto text-center">Aucun article correspondant à votre recherche</p>;
+  }
 
   return (
     <section className="mx-auto flex w-full flex-col gap-4 lg:w-4/5">
@@ -60,8 +48,8 @@ export const BlogList = ({ initialArticles }: BlogListProps) => {
         </React.Fragment>
       ))}
 
-      {isLoading && <LoaderCircle className="mx-auto size-6 animate-spin" />}
-      {!isLimitReached && <Button onClick={loadMoreArticles}>Load more</Button>}
+      {isFetchingNextPage && <LoaderCircle className="mx-auto size-6 animate-spin" />}
+      {hasNextPage && <Button onClick={() => fetchNextPage()}>Load more</Button>}
     </section>
   );
 };
