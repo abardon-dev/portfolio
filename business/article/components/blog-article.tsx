@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { AccordionContent } from "@radix-ui/react-accordion";
 import { TArticle } from "@/api/article";
+import { CustomMDX } from "@/components/ui/mdx-renderer";
 
 type BlogArticleProps = {
   article: TArticle;
@@ -26,7 +27,7 @@ export const BlogArticle = ({ article }: BlogArticleProps) => (
         </AccordionItem>
       </Accordion>
 
-      <BlogArticleContent />
+      <CustomMDX source={article.content} />
 
       {/**Laptop and desktop table of contents */}
       <aside className="relative hidden lg:block">
@@ -108,69 +109,5 @@ const BlogArticleTableOfContents = () => (
     <Button className="w-fit max-w-full font-sans text-xs" variant={"ghost"} size={"sm"}>
       <span className="truncate">Lorem ipsum, dolor sit amet.</span>
     </Button>
-  </div>
-);
-const BlogArticleContent = () => (
-  <div className="text-justify font-sans">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum
-    sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil!
-    Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui
-    recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores
-    nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus
-    voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam
-    blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing
-    elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus
-    veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet
-    consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis
-    dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi
-    nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil!
-    Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui
-    recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores
-    nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus
-    voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam
-    blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing
-    elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus
-    veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet
-    consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis
-    dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi
-    nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil!
-    Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui
-    recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores
-    nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus
-    voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam
-    blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing
-    elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus
-    veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet
-    consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis
-    dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi
-    nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil!
-    Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui
-    recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores
-    nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus
-    voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam
-    blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing
-    elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus
-    veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet
-    consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis
-    dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi
-    nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil!
-    Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui
-    recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores
-    nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus
-    voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam
-    blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing
-    elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus
-    veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem ipsum dolor sit amet
-    consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi nostrum officiis
-    dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil! Consequuntur, ad? Lorem
-    ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui recusandae, voluptatum sequi
-    nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores nobis consequatur nihil!
-    Consequuntur, ad? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia doloribus voluptatibus ad qui
-    recusandae, voluptatum sequi nostrum officiis dolore repellat repellendus veritatis? Aperiam blanditiis dolores
-    nobis consequatur nihil! Consequuntur, ad?
   </div>
 );

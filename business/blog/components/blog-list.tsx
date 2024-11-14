@@ -36,7 +36,7 @@ export const BlogList = ({ availableTags }: { availableTags: string[] }) => {
           <div className="flex w-full items-center">
             <hr className="h-0.5 w-full bg-accent" />
             <div className="rounded-full border border-accent bg-background px-3 py-2 shadow-md">
-              <p className="whitespace-nowrap text-2xs font-semibold uppercase text-muted">
+              <p className="whitespace-nowrap text-xs font-semibold uppercase text-primary">
                 {new Date(date).toLocaleString(undefined, { month: "long", year: "numeric" })}
               </p>
             </div>

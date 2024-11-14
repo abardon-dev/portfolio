@@ -3,7 +3,6 @@ import Link from "next/link";
 import { navItems } from "../constants/nav-items";
 import { RealtimeClock } from "@/business/location/components/realtime-clock";
 import { getCountryUnicode } from "@/business/location/utils/get-country-unicode";
-import Image from "next/image";
 
 export const Footer = async () => {
   //TODO: Remove this comment when production is ready
@@ -17,22 +16,11 @@ export const Footer = async () => {
         <div className="flex flex-col gap-3">
           <div>
             <h1 className="text-4xl font-bold uppercase sm:text-5xl">Curious?</h1>
-            <p className="relative text-sm text-muted sm:text-base">
+            <p className="relative text-sm text-primary sm:text-base">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, vel libero voluptate similique expedita id
               laborum beatae ab iusto dolores veritatis rerum ipsa voluptatibus voluptatum, quibusdam optio et magni
               maiores.
             </p>
-          </div>
-          <div className="relative">
-            <p className="text-lg font-light text-muted">Check my social medias</p>
-            <Image
-              className="absolute -left-11 -top-7 size-12 sm:-left-14 sm:-top-10 sm:size-16"
-              priority
-              src="/img/arrow-thin.svg"
-              alt="Arrow pointing to social medias on the left side"
-              width={64}
-              height={64}
-            />
           </div>
         </div>
 

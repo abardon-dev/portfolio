@@ -13,7 +13,6 @@ type TArticleStrapiResponse = StrapiDataResponse<{
   nbViews: string;
   //TODO: Add the thumbnail
   /* thumbnail: Blob; */
-  //TODO: Remove content here
   content: string;
 }>;
 
@@ -68,12 +67,15 @@ export const getPopularArticles = (options?: GetRequestOptions) =>
       }))
     );
 
+//TODO: Handle caching and generate article statically
 export const getArticleById = (articleDocumentId: string) =>
-  strapiClient.get<TArticleStrapiResponse>(`articles/${articleDocumentId}?populate=tags`).then((res) => ({
-    ...res.data,
-    createdAt: new Date(res.data.createdAt),
-    updatedAt: new Date(res.data.updatedAt)
-  }));
+  strapiClient
+    .get<TArticleStrapiResponse>(`articles/${articleDocumentId}?populate=tags`, { cache: "no-cache" })
+    .then((res) => ({
+      ...res.data,
+      createdAt: new Date(res.data.createdAt),
+      updatedAt: new Date(res.data.updatedAt)
+    }));
 
 export const getArticleViewsById = (articleDocumentId: string, options?: GetRequestOptions) =>
   strapiClient

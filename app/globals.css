@@ -14,7 +14,8 @@
   --third: 223 38% 77%;
   --third-foreground: var(--foreground);
 
-  --muted: 227 45% 52%;
+  --muted: 266 34% 85%;
+  --muted-foreground: 227 45% 43%;
 
   --accent: 333 47% 72%;
   --accent-foreground: var(--background);
