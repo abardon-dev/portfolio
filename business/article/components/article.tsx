@@ -4,43 +4,37 @@ import Link from "next/link";
 import { ShareArticleButton } from "./share-article-button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { AccordionContent } from "@radix-ui/react-accordion";
 import { TArticle } from "@/api/article";
-import { CustomMDX } from "@/components/ui/mdx-renderer";
+import { CustomMDX, ToC } from "@/components/ui/mdx-renderer";
+import { ArticleTocElement } from "./article-toc-element";
 
-type BlogArticleProps = {
+type ArticleProps = {
   article: TArticle;
+  toc: ToC;
 };
 
-export const BlogArticle = ({ article }: BlogArticleProps) => (
+export const Article = ({ article, toc }: ArticleProps) => (
   <section className="space-y-8">
-    <BlogArticleHeader article={article} />
-    <section className="flex flex-col gap-4 lg:flex-row lg:gap-8">
-      {/**Mobile and tablet table of contents */}
-      <Accordion className="w-full lg:hidden" type="single" collapsible>
-        <AccordionItem value="table-of-contents">
-          <AccordionTrigger className="text-2xl font-medium">Table of contents</AccordionTrigger>
-          <AccordionContent>
-            <BlogArticleTableOfContents />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
+    <ArticleHeader article={article} />
+    <section className="flex gap-8">
       <CustomMDX source={article.content} />
 
-      {/**Laptop and desktop table of contents */}
+      {/**TODO: Handle active anchor */}
       <aside className="relative hidden lg:block">
         <div className="sticky right-0 top-24 w-64 space-y-1 xl:top-8">
-          <h3 className="mb-1 text-xl font-medium">Table of contents</h3>
-          <BlogArticleTableOfContents />
+          <h3 className="mb-1 font-sans font-medium">On this page</h3>
+          <ol className="space-y-2">
+            {toc.map(({ title, anchor, level }, index) => (
+              <ArticleTocElement key={index} title={title} anchor={anchor} level={level} />
+            ))}
+          </ol>
         </div>
       </aside>
     </section>
   </section>
 );
 
-const BlogArticleHeader = ({ article }: BlogArticleProps) => (
+const ArticleHeader = ({ article }: Pick<ArticleProps, "article">) => (
   <>
     <div className="flex w-full justify-between">
       <Button className="font-sans text-sm" variant={"ghost"} asChild>
@@ -93,21 +87,4 @@ const BlogArticleHeader = ({ article }: BlogArticleProps) => (
       />
     </div>
   </>
-);
-
-const BlogArticleTableOfContents = () => (
-  <div className="flex w-full flex-col gap-1 overflow-x-hidden">
-    <Button className="w-fit max-w-full font-sans text-sm font-medium" variant={"ghost"} size={"sm"}>
-      <span className="truncate">Introduction</span>
-    </Button>
-    <Button className="w-fit max-w-full font-sans text-xs" variant={"ghost"} size={"sm"}>
-      <span className="truncate">Lorem ipsum, dolor sit amet.</span>
-    </Button>
-    <Button className="w-fit max-w-full font-sans text-xs" variant={"ghost"} size={"sm"}>
-      <span className="truncate">Lorem ipsum, dolor sit amet.</span>
-    </Button>
-    <Button className="w-fit max-w-full font-sans text-xs" variant={"ghost"} size={"sm"}>
-      <span className="truncate">Lorem ipsum, dolor sit amet.</span>
-    </Button>
-  </div>
 );

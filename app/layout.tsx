@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="scroll-smooth" lang="en">
       <body
         className={`relative ${buenoMono.variable} ${inter.variable} ${twemoji.variable} min-h-svh w-screen overflow-y-auto overflow-x-hidden`}
       >
