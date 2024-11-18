@@ -5,8 +5,8 @@ import { ShareArticleButton } from "./share-article-button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { TArticle } from "@/api/article";
-import { CustomMDX, ToC } from "@/components/ui/mdx-renderer";
 import { ArticleTocElement } from "./article-toc-element";
+import { ToC, CustomMDX } from "@/components/ui/mdx-renderer";
 
 type ArticleProps = {
   article: TArticle;
@@ -19,7 +19,6 @@ export const Article = ({ article, toc }: ArticleProps) => (
     <section className="flex gap-8">
       <CustomMDX source={article.content} />
 
-      {/**TODO: Handle active anchor */}
       <aside className="relative hidden lg:block">
         <div className="sticky right-0 top-24 w-64 space-y-1 xl:top-8">
           <h3 className="mb-1 font-sans font-medium">On this page</h3>

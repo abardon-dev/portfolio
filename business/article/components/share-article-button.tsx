@@ -27,7 +27,10 @@ export const ShareArticleButton = () => {
       onClick={copyUrlToClipboard}
     >
       {!isCopied ? (
-        <Share2 className="size-5" />
+        <>
+          <span className="sr-only">Share</span>
+          <Share2 className="size-5" />
+        </>
       ) : (
         <>
           <Check className="mr-1 size-4" />

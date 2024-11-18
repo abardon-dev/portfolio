@@ -2,9 +2,10 @@ import Image, { ImageProps } from "next/image";
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { PropsWithChildren } from "react";
 import { cn } from "@/utils/cn";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Link2 } from "lucide-react";
+import { CopyCodeButton } from "./copy-code-button";
 
 //TODO: Test speed-highlight lib
 
@@ -163,17 +164,30 @@ const components: MDXRemoteProps["components"] = {
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote className={cn("mt-3 border-l-2 border-primary py-0.5 pl-6", className)} {...props} />
   ),
-  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre className={cn("overflow-x-auto rounded-sm text-sm", className)} {...props} />
+  pre: ({ className, children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+    <>
+      <pre className={cn("relative mb-4 mt-6 max-h-[650px] overflow-x-auto text-sm", className)} {...props}>
+        {children}
+      </pre>
+    </>
   ),
-  //TODO: Add copy to clipboard button / name of the file
+  //TODO: Add name of the file
   code({ className, children, ...props }: React.HTMLAttributes<HTMLElement>) {
     const match = /language-(\w+)/.exec(className || "");
 
     return match ? (
-      <SyntaxHighlighter style={nightOwl} PreTag={components.pre} language={match[1]} {...props}>
-        {String(children).replace(/\n$/, "")}
-      </SyntaxHighlighter>
+      <>
+        {children ? <CopyCodeButton className={"absolute right-4 top-4"} rawValue={children.toString() ?? ""} /> : null}
+        <SyntaxHighlighter
+          style={nightOwl}
+          customStyle={{ borderRadius: "4px" }}
+          PreTag={"div"}
+          language={match[1]}
+          {...props}
+        >
+          {String(children).replace(/\n$/, "")}
+        </SyntaxHighlighter>
+      </>
     ) : (
       <code
         className={cn(
