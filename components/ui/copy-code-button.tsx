@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { CheckIcon, ClipboardIcon } from "lucide-react";
+import { CheckIcon, CopyIcon } from "lucide-react";
 
 import { cn } from "@/utils/cn";
 import { Button, ButtonProps } from "@/components/ui/button";
@@ -23,7 +23,7 @@ export function CopyCodeButton({ rawValue: value, className, variant = "ghost", 
     });
   };
 
-  const Icon = isCopied ? CheckIcon : ClipboardIcon;
+  const Icon = isCopied ? CheckIcon : CopyIcon;
 
   return (
     <Button

@@ -1,48 +1,12 @@
 import Image, { ImageProps } from "next/image";
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, ReactElement } from "react";
 import { cn } from "@/utils/cn";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter, SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Link2 } from "lucide-react";
+import { FileCode2, Link2 } from "lucide-react";
 import { CopyCodeButton } from "./copy-code-button";
-
-//TODO: Test speed-highlight lib
-
-function slugify(str: React.ReactNode) {
-  const slug = (str: string) =>
-    str
-      .toString()
-      .toLowerCase()
-      .trim() // Remove whitespace from both ends of a string
-      .replace(/\s+/g, "-") // Replace spaces with -
-      .replace(/&/g, "-and-") // Replace & with 'and'
-      .replace(/`/g, "") // Replace backticks with empty characters
-      .replace(/[^\w-]+/g, "") // Remove all non-word characters except for -
-      .replace(/--+/g, "-"); // Replace multiple - with single -
-
-  if (typeof str === "string") {
-    return slug(str);
-  }
-
-  /**Handle react node inside the heading */
-  if (Array.isArray(str) && str.length !== 0) {
-    return slug(
-      str
-        .map((item) => {
-          if (typeof item === "object" && typeof item.props.children === "string") {
-            return item.props.children;
-          } else if (item === "object") {
-            return "";
-          }
-          return item;
-        })
-        .toString()
-    );
-  }
-
-  return "";
-}
+import rehypeMdxCodeProps from "rehype-mdx-code-props";
 
 function RoundedImage({ alt, ...props }: ImageProps) {
   return <Image className="rounded-lg" alt={alt} {...props} />;
@@ -164,30 +128,73 @@ const components: MDXRemoteProps["components"] = {
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote className={cn("mt-3 border-l-2 border-primary py-0.5 pl-6", className)} {...props} />
   ),
-  pre: ({ className, children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <>
-      <pre className={cn("relative mb-4 mt-6 max-h-[650px] overflow-x-auto text-sm", className)} {...props}>
-        {children}
+  pre: ({
+    className,
+    children,
+    filename,
+    lines,
+    ...props
+  }: React.HTMLAttributes<HTMLPreElement> & { filename?: string; lines?: string }) => {
+    if (!React.isValidElement(children)) {
+      return null;
+    }
+
+    const codeContent = children.props.children.toString();
+
+    return (
+      <pre className={cn("relative mb-4 mt-6 rounded-sm bg-[#011627] p-1 text-sm", className)} {...props}>
+        {filename ? (
+          <>
+            <div className="flex items-center gap-2 px-3 py-2">
+              {filename && (
+                <>
+                  <FileCode2 className="h-4 w-4 text-primary-foreground" />
+                  <span className="font-sans text-xs text-primary-foreground">{filename}</span>
+                </>
+              )}
+              <CopyCodeButton className="ml-auto" rawValue={codeContent} />
+            </div>
+            <hr className="h-[1px] w-full border-primary-foreground/30" />
+          </>
+        ) : (
+          <CopyCodeButton className="absolute right-4 top-4" rawValue={codeContent} />
+        )}
+
+        {React.cloneElement(children as ReactElement, { highlightLines: extractCodeLinesToHighlight(lines) })}
       </pre>
-    </>
-  ),
-  //TODO: Add name of the file
-  code({ className, children, ...props }: React.HTMLAttributes<HTMLElement>) {
+    );
+  },
+  code({
+    className,
+    children,
+    highlightLines = [],
+    ...props
+  }: React.HTMLAttributes<HTMLElement> & SyntaxHighlighterProps & { highlightLines?: number[] }) {
     const match = /language-(\w+)/.exec(className || "");
 
+    if (!children) {
+      return null;
+    }
+
     return match ? (
-      <>
-        {children ? <CopyCodeButton className={"absolute right-4 top-4"} rawValue={children.toString() ?? ""} /> : null}
-        <SyntaxHighlighter
-          style={nightOwl}
-          customStyle={{ borderRadius: "4px" }}
-          PreTag={"div"}
-          language={match[1]}
-          {...props}
-        >
-          {String(children).replace(/\n$/, "")}
-        </SyntaxHighlighter>
-      </>
+      <SyntaxHighlighter
+        style={nightOwl}
+        PreTag={"div"}
+        language={match[1]}
+        /** Workaround to make lineNumber callback param of lineProps returns a number instead false (https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/288) */
+        showLineNumbers={true}
+        lineNumberStyle={{ display: "none" }}
+        wrapLines
+        lineProps={(lineNumber) => ({
+          style: {
+            display: "block",
+            backgroundColor: highlightLines.includes(lineNumber) ? "hsl(206, 94%, 12%)" : ""
+          }
+        })}
+        {...props}
+      >
+        {children}
+      </SyntaxHighlighter>
     ) : (
       <code
         className={cn(
@@ -204,14 +211,19 @@ const components: MDXRemoteProps["components"] = {
 };
 
 //TODO: Handle responsiveness
-export function CustomMDX(props: MDXRemoteProps) {
+export async function CustomMDX(props: MDXRemoteProps) {
   return (
     <article className="text-justify">
-      <MDXRemote {...props} components={{ ...components, ...props.components }} />
+      <MDXRemote
+        {...props}
+        components={{ ...components, ...props.components }}
+        options={{ mdxOptions: { rehypePlugins: [rehypeMdxCodeProps] } }}
+      />
     </article>
   );
 }
 
+/* ----------- Utils ----------- */
 export type ToC = {
   level: number;
   title: string;
@@ -236,4 +248,67 @@ export const extractToc = (markdownContent: string): ToC => {
       return { level, title, anchor: `#${slugify(title)}` };
     }) ?? []
   );
+};
+
+function slugify(str: React.ReactNode) {
+  const slug = (str: string) =>
+    str
+      .toString()
+      .toLowerCase()
+      .trim() // Remove whitespace from both ends of a string
+      .replace(/\s+/g, "-") // Replace spaces with -
+      .replace(/&/g, "-and-") // Replace & with 'and'
+      .replace(/`/g, "") // Replace backticks with empty characters
+      .replace(/[^\w-]+/g, "") // Remove all non-word characters except for -
+      .replace(/--+/g, "-"); // Replace multiple - with single -
+
+  if (typeof str === "string") {
+    return slug(str);
+  }
+
+  /**Handle react node inside the heading */
+  if (Array.isArray(str) && str.length !== 0) {
+    return slug(
+      str
+        .map((item) => {
+          if (typeof item === "object" && typeof item.props.children === "string") {
+            return item.props.children;
+          } else if (item === "object") {
+            return "";
+          }
+          return item;
+        })
+        .toString()
+    );
+  }
+
+  return "";
+}
+
+/**
+ * Extract an array of line numbers to highlight based on the lines string got from the block code metadata inside themarkdown file
+ *
+ * @param lines string lines go from the markdown files (Ex: {1, 3-5, 8})
+ * @returns array of line numbers to highlight in the code block
+ */
+const extractCodeLinesToHighlight = (lines?: string) => {
+  if (!lines || !lines.match(/^\{(\d+(-\d+)?)(,\s?\d+(-\d+)?)*\}$/)) {
+    return [];
+  }
+
+  const linesWithoutBrackets = lines.replace(/[[\](){}]/g, "");
+
+  const highlightLines: number[] = [];
+
+  for (const lineRange of linesWithoutBrackets.trim().split(",")) {
+    const lineNumbers = lineRange.split("-");
+    const startLine = parseInt(lineNumbers[0]);
+    const endLine = lineNumbers.length === 2 ? parseInt(lineNumbers[1]) : startLine;
+
+    for (let i = startLine; i <= endLine; i++) {
+      highlightLines.push(i);
+    }
+  }
+
+  return highlightLines;
 };

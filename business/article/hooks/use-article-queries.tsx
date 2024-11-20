@@ -9,8 +9,6 @@ export const useInfiniteArticles = (filters: TArticleFilters) =>
     initialPageParam: 1,
     getNextPageParam: (lastPage, _, lastPageParam) => {
       const totalPages = lastPage.meta.pagination.pageCount;
-      console.log(lastPage, lastPageParam);
-
       if (totalPages <= lastPageParam) {
         return undefined;
       }

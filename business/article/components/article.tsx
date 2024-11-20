@@ -6,18 +6,19 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { TArticle } from "@/api/article";
 import { ArticleTocElement } from "./article-toc-element";
-import { ToC, CustomMDX } from "@/components/ui/mdx-renderer";
+import { ToC } from "@/components/ui/mdx-renderer";
 
 type ArticleProps = {
   article: TArticle;
   toc: ToC;
+  content: React.ReactNode;
 };
 
-export const Article = ({ article, toc }: ArticleProps) => (
+export const Article = ({ article, toc, content }: ArticleProps) => (
   <section className="space-y-8">
     <ArticleHeader article={article} />
     <section className="flex gap-8">
-      <CustomMDX source={article.content} />
+      {content}
 
       <aside className="relative hidden lg:block">
         <div className="sticky right-0 top-24 w-64 space-y-1 xl:top-8">
