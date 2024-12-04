@@ -3,7 +3,7 @@ import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
-import { encodeArticleTitle } from "@/business/article/utils/article-utils";
+import { generateArticleSlug } from "@/business/article/utils/article-utils";
 import { TArticle } from "@/api/article";
 
 type BlogArticleResumeProps = {
@@ -12,7 +12,7 @@ type BlogArticleResumeProps = {
 };
 
 export const BlogArticleResume = ({ variant = "horizontal", articleResume }: BlogArticleResumeProps) => (
-  <Link href={`/blog/${encodeArticleTitle(articleResume.title, articleResume.documentId)}`}>
+  <Link href={`/blog/${generateArticleSlug(articleResume.title, articleResume.documentId)}`}>
     <Container>
       <div
         className={cn("flex w-full flex-col-reverse gap-3 overflow-hidden", {

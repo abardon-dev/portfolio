@@ -1,4 +1,4 @@
-export const encodeArticleTitle = (title: string, documentId: string) =>
+export const generateArticleSlug = (title: string, documentId: string) =>
   `${encodeURIComponent(
     title
       .toLocaleLowerCase()
@@ -7,12 +7,8 @@ export const encodeArticleTitle = (title: string, documentId: string) =>
       .trim()
   )}-${documentId}`;
 
-export const extractDocumentIdFromEncodedArticleTitle = (encodedTitle: string): string => {
+export const extractDocumentIdFromArticleSlug = (encodedTitle: string): string | undefined => {
   const documentId = encodedTitle.split("-").pop();
-
-  if (documentId === undefined) {
-    throw new Error(`Invalid article document id: ${encodedTitle}`);
-  }
 
   return documentId;
 };

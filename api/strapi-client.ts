@@ -25,8 +25,7 @@ const withBaseUrl = (url: string | URL | Request) => `${BASE_URL}/${url}`;
 
 const handleResponse = <TResponse>(res: Response) => {
   if (!res.ok) {
-    console.error(res);
-    throw new Error(`Failed to fetch data`);
+    throw new Error(`Failed to fetch data`, { cause: res });
   }
 
   return res.json() as Promise<StrapiResponse<TResponse>>;

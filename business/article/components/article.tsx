@@ -14,6 +14,7 @@ type ArticleProps = {
   content: React.ReactNode;
 };
 
+/**TODO: Handle current TOC element when the user scrolls */
 export const Article = ({ article, toc, content }: ArticleProps) => (
   <section className="space-y-8">
     <ArticleHeader article={article} />

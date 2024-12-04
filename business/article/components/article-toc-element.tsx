@@ -19,7 +19,7 @@ export const ArticleTocElement = ({ title, anchor, level }: ToC[number]) => {
     return () => {
       window.removeEventListener("popstate", handleAnchorChange);
     };
-  }, [anchor]); // Empty dependency array to run only once on mount/unmount
+  }, [anchor]);
 
   return (
     <li

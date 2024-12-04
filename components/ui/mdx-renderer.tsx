@@ -164,6 +164,7 @@ const components: MDXRemoteProps["components"] = {
       </pre>
     );
   },
+
   code({
     className,
     children,
